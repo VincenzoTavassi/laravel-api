@@ -14,8 +14,8 @@
       <td>{{$project->title}}</td>
       <td>{{$project->date}}</td>
       <td>
-        <a href="{{route('projects.show', $project)}}" title="Mostra dettagli del progetto"><i class="bi bi-eye-fill"></i></a>
         <a href="{{$project->link}}" title="Vai al progetto online"><i class="bi bi-link-45deg"></i></a>
+        <a href="{{route('projects.show', $project)}}" title="Mostra dettagli del progetto"><i class="bi bi-eye-fill"></i></a>
     </td>
     </tr>
     @empty

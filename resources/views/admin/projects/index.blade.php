@@ -14,6 +14,7 @@
                     @endif
 
                     @include('admin.projects._partials.project-list')
+                    {{$projects->links()}}
                 </div>
             </div>
         </div>
