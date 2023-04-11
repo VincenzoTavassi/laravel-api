@@ -2,14 +2,10 @@
 
 @section('content')
 <div class="container">
-    <h2 class="fs-4 text-secondary my-4">
-        {{ __('Dashboard') }}
-    </h2>
+    <h2 class="fs-4 text-secondary my-4">Lista Progetti</h2>
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
-                <div class="card-header">{{ __('User Dashboard') }}</div>
-
                 <div class="card-body">
                     @if (session('status'))
                     <div class="alert alert-success" role="alert">
@@ -17,8 +13,7 @@
                     </div>
                     @endif
 
-                    {{ __('Sei autenticato!') }}
-                    Vai alla <a href="{{route('projects.index')}}">Lista progetti</a>
+                    @include('admin.projects._partials.project-list')
                 </div>
             </div>
         </div>

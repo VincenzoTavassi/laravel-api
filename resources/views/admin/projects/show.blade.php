@@ -3,24 +3,25 @@
 @section('content')
 <div class="container">
     <h2 class="fs-4 text-secondary my-4">
-        {{ __('Dashboard') }}
     </h2>
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
-                <div class="card-header">{{ __('User Dashboard') }}</div>
-
                 <div class="card-body">
                     @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
                     </div>
                     @endif
-
-                    {{ __('Sei autenticato!') }}
-                    Vai alla <a href="{{route('projects.index')}}">Lista progetti</a>
+                    <h2>{{$project->title}}</h2>
+                    <p><strong>id: </strong>{{$project->id}}</p>
+                    <p><strong>Titolo: </strong>{{$project->title}}</p>
+                    <p><strong>Link: </strong><a href="{{$project->link}}">{{$project->title}}</a></p>
+                    <p>{{$project->description}}</p>
+                    <p><strong>Progetto del {{$project->date}}</strong></p>
                 </div>
             </div>
+            <a href="{{route('projects.index')}}" class="btn btn-dark my-4">Torna alla Lista</a>
         </div>
     </div>
 </div>

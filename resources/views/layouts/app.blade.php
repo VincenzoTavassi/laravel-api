@@ -17,6 +17,10 @@
 
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
+    
+    <!-- Bootstrap icons  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+
 </head>
 
 <body>
@@ -46,6 +50,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/') }}">{{ __('Home') }}</a>
                         </li>
+                        @Auth
+                        <li class="nav-item"><a class="nav-link" href="{{route('projects.index')}}">Lista Progetti</a></li>
+                        @endauth
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
