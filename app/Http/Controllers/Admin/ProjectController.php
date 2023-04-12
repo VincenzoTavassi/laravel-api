@@ -84,8 +84,14 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy(Project $project, Request $request)
     {
-        //
+        $project->delete();
+
+        // Redirect all'ultima pagina disponibile
+        $paginator = Project::paginate(10);
+        // Se la pagina del $request è minore uguale all'ultima disponibile OK, altrimenti redirect all'ultima disponibile
+        $redirectToPage = ($request->page <= $paginator->lastPage()) ? $request->page : $paginator->lastPage();
+        return to_route('projects.index', ['page' => $redirectToPage]);
     }
 }
