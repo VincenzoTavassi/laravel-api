@@ -17,7 +17,7 @@
         <a href="{{$project->link}}" title="Vai al progetto online"><i class="bi bi-link-45deg"></i></a>
         <a href="{{route('projects.show', $project)}}" title="Mostra dettagli del progetto"><i class="bi bi-eye-fill"></i></a>
         <a href="{{route('projects.edit', $project)}}" title="Modifica il progetto"><i class="bi bi-pencil-fill"></i></a>
-        <i class="bi bi-trash3-fill text-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-project-id="{{$project->id}}" data-bs-project-title="{{$project->title}}"></i>
+        <i class="bi bi-trash3-fill text-dark" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-project-id="{{$project->id}}" data-bs-project-title="{{$project->title}}"></i>
     </td>
     </tr>
     @empty

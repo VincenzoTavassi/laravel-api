@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\GuestProjectsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [GuestProjectsController::class, 'index'])->name('guest.index');
+Route::get('/project/{project}', [GuestProjectsController::class, 'show'])->name('guest.show');
+
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
