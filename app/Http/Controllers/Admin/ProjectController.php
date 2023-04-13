@@ -6,6 +6,8 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
 
 class ProjectController extends Controller
 {
@@ -40,9 +42,14 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $this->validation($request->all());
+        if (Arr::exists($data, 'image')) { // Se c'è un'immagine nell'array $data
+            $path = Storage::put('uploads', $data['image']); // Ottieni il path e salvala nella cartella uploads
+            $data['image'] = $path; // Il dato da salvare in db diventa il path dell'immagine
+        }
         $project = new Project;
-        $project->fill($data);
+        $project->fill($data); // Fillable da inserire nel model
         $project->save();
         return to_route('projects.show', $project)->with('message', 'Progetto creato con successo!');
     }
@@ -79,6 +86,11 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $data = $this->validation($request->all());
+        if (Arr::exists($data, 'image')) { // Se c'è un'immagine nell'array $data
+            Storage::delete($project->image); // Elimina la vecchia immagine
+            $path = Storage::put('uploads', $data['image']); // Ottieni il path della nuova e salvala nella cartella uploads
+            $data['image'] = $path; // Il dato da salvare in db diventa il path dell'immagine
+        }
         $project->update($data);
         return to_route('projects.show', compact('project'))->with('message', 'Progetto modificato con successo!');;
     }
@@ -91,6 +103,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project, Request $request)
     {
+        if ($project->image) { // Se c'è un'immagine eliminala
+            Storage::delete($project->image);
+        }
         $project->delete();
 
         // Redirect all'ultima pagina disponibile
@@ -112,6 +127,7 @@ class ProjectController extends Controller
                 'link' => 'required|url|max:255',
                 'description' => 'nullable|max:2500',
                 'date' => 'date|required',
+                'image' => 'nullable|image|mimes:jpg,jpeg,bmp,png'
             ],
             [
                 'title.*' => 'Il titolo è obbligatorio (massimo 100 caratteri)',
@@ -123,7 +139,10 @@ class ProjectController extends Controller
                 'description.max' => 'La descrizione può avere massimo 2500 caratteri',
 
                 'date.date' => 'Il formato della data non è corretto',
-                'date.required' => 'La data del progetto è obbligatoria'
+                'date.required' => 'La data del progetto è obbligatoria',
+
+                'image.image' => 'Il file deve essere un\'immagine',
+                'image.mimes' => 'Estensioni ammesse: .jpg, .jpeg, .bmp, .png'
             ]
         )->validate();
     }
