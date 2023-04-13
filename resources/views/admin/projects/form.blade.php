@@ -13,11 +13,11 @@
                 <div class="card-body container">
                 @if($project->id)
                     <h2 class="mb-4">Modifica il progetto</h2>
-                    <form action="{{route('projects.update', $project)}}" method="post" class="row">
+                    <form action="{{route('projects.update', $project)}}" method="post" class="row" enctype="multipart/form-data">
                     @method('put')
                 @else
                     <h2 class="mb-4">Crea un nuovo progetto</h2>
-                    <form action="{{route('projects.store')}}" method="post" class="row">
+                    <form action="{{route('projects.store')}}" method="post" class="row" enctype="multipart/form-data">
                 @endif
                 @csrf
                 <div class="col-4">
@@ -42,6 +42,15 @@
                     <label for="date">Data</label>
                     <input type="date" name="date" id="date" class="w-50 form-control @error('date') is-invalid @enderror" value="{{old('date', $project->date)}}">
                     @error('date')
+                    <div class="invalid-feedback">
+                    {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="col-4">
+                    <label for="image">Immagine</label>
+                    <input type="file" name="image" id="image" class="w-50 form-control @error('image') is-invalid @enderror" value="{{old('image', $project->image)}}">
+                    @error('image')
                     <div class="invalid-feedback">
                     {{ $message }}
                     </div>
