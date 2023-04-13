@@ -92,7 +92,7 @@ class ProjectController extends Controller
             $data['image'] = $path; // Il dato da salvare in db diventa il path dell'immagine
         }
         $project->update($data);
-        return to_route('projects.show', compact('project'))->with('message', 'Progetto modificato con successo!');;
+        return to_route('projects.show', compact('project'))->with('message', 'Progetto modificato con successo!');
     }
 
     /**

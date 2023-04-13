@@ -2,7 +2,7 @@
     @foreach ($projects as $project)
     <div class="col my-2">
         <div class="card h-100">
-            <img src="{{$project->link}}" class="card-img-top" alt="...">
+            <img src="{{$project->image ? asset('storage/' . $project->image) : $project->link}}" class="card-img-top" alt="{{$project->title}}">
             <div class="card-body d-flex flex-column align-items-center">
                 <h5 class="card-title">{{$project->title}}</h5>
                 <p class="card-text">{{$project->description}}</p>

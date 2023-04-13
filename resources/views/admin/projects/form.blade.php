@@ -29,7 +29,7 @@
                     </div>
                     @enderror
                 </div>
-                <div class="col-4">
+                <div class="col-5">
                     <label for="link">Link al progetto</label>
                     <input type="text" name="link" id="link" class="w-100 form-control @error('link') is-invalid @enderror" value="{{old('link', $project->link)}}">
                     @error('link')
@@ -38,7 +38,7 @@
                     </div>
                     @enderror
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <label for="date">Data</label>
                     <input type="date" name="date" id="date" class="w-50 form-control @error('date') is-invalid @enderror" value="{{old('date', $project->date)}}">
                     @error('date')
@@ -47,19 +47,24 @@
                     </div>
                     @enderror
                 </div>
-                <div class="col-4">
-                    <label for="image">Immagine</label>
-                    <input type="file" name="image" id="image" class="w-50 form-control @error('image') is-invalid @enderror" value="{{old('image', $project->image)}}">
-                    @error('image')
+                <div class="col-9">
+                    <label for="description" class="my-2">Descrizione</label>
+                    <textarea rows="8" class="w-100 form-control @error('description') is-invalid @enderror" name="description" id="description">{{old('description', $project->description)}}</textarea>
+                    @error('description')
                     <div class="invalid-feedback">
-                    {{ $message }}
+                        {{ $message }}
                     </div>
                     @enderror
                 </div>
-                <div class="col-8">
-                    <label for="description">Descrizione</label>
-                    <textarea class="w-100 form-control @error('description') is-invalid @enderror" name="description" id="description">{{old('description', $project->description)}}</textarea>
-                    @error('description')
+                <div class="col-2">
+                    @if($project->image)
+                    <img src="{{asset('storage/' . $project->image)}}" alt="" width="100%">
+                    @elseif($project->link)
+                    <img src="{{$project->link}}" alt="" width="100%" class="my-3">
+                    @endif
+                    <label for="image">Immagine</label>
+                    <input type="file" name="image" id="image" class="w-50 form-control @error('image') is-invalid @enderror" value="{{old('image', $project->image)}}">
+                    @error('image')
                     <div class="invalid-feedback">
                     {{ $message }}
                     </div>
