@@ -87,9 +87,12 @@ class ProjectController extends Controller
     {
         $data = $this->validation($request->all());
         if (Arr::exists($data, 'image')) { // Se c'è un'immagine nell'array $data
-            Storage::delete($project->image); // Elimina la vecchia immagine
+            if ($project->image) {
+                Storage::delete($project->image); // Elimina la vecchia immagine se presente
+            }
             $path = Storage::put('uploads', $data['image']); // Ottieni il path della nuova e salvala nella cartella uploads
             $data['image'] = $path; // Il dato da salvare in db diventa il path dell'immagine
+
         }
         $project->update($data);
         return to_route('projects.show', compact('project'))->with('message', 'Progetto modificato con successo!');
