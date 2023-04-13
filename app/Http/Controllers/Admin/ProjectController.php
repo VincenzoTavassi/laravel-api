@@ -44,7 +44,7 @@ class ProjectController extends Controller
         $project = new Project;
         $project->fill($data);
         $project->save();
-        return redirect(route('projects.show', $project));
+        return to_route('projects.show', $project)->with('message', 'Progetto creato con successo!');
     }
 
     /**
@@ -80,7 +80,7 @@ class ProjectController extends Controller
     {
         $data = $this->validation($request->all());
         $project->update($data);
-        return view('admin.projects.show', compact('project'));
+        return to_route('projects.show', compact('project'))->with('message', 'Progetto modificato con successo!');;
     }
 
     /**
@@ -97,7 +97,7 @@ class ProjectController extends Controller
         $paginator = Project::paginate(10);
         // Se la pagina del $request è minore uguale all'ultima disponibile OK, altrimenti redirect all'ultima disponibile
         $redirectToPage = ($request->page <= $paginator->lastPage()) ? $request->page : $paginator->lastPage();
-        return to_route('projects.index', ['page' => $redirectToPage]);
+        return to_route('projects.index', ['page' => $redirectToPage])->with('message', 'Progetto eliminato con successo!');
     }
 
 

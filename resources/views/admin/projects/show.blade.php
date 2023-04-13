@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
+  @include('admin.projects._partials.session-messages')
     <h2 class="fs-4 text-secondary my-4">
     </h2>
     <div class="row justify-content-center">

@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="container">
+      @include('admin.projects._partials.session-messages')
     <div class="row justify-content-center">
         <div class="col my-3">
             <div class="d-flex align-items-center">

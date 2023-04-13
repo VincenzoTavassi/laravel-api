@@ -2,18 +2,9 @@
 
 @section('content')
 
-@if ($errors->any())
-  <div class="alert alert-danger">
-    <h4>Correggi i seguenti errori per proseguire: </h4>
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
+  @include('admin.projects._partials.session-messages')
 
-<div class="container">
+  <div class="container">
     <h2 class="fs-4 text-secondary my-4">
     </h2>
     <div class="row justify-content-center">
