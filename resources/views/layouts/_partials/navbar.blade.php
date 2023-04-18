@@ -14,7 +14,7 @@
                             <a class="nav-link" href="{{url('/') }}">{{ __('Home') }}</a>
                         </li>
                         @Auth
-                        <li class="nav-item"><a class="nav-link" href="{{ url('dashboard') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('types.index')}}">Tipologie</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('projects.index')}}">Lista Progetti</a></li>
                         @endauth
 

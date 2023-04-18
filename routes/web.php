@@ -22,13 +22,13 @@ Route::get('/', [GuestProjectsController::class, 'index'])->name('guest.index');
 Route::get('/project/{project}', [GuestProjectsController::class, 'show'])->name('guest.show');
 
 // Resources
-Route::resource('types', TypeController::class)->middleware('auth');
+Route::resource('types', TypeController::class)->except('show')->middleware('auth');
 Route::resource('projects', ProjectController::class)->middleware('auth');
 
 // Dashboard
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('admin.dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 // Authentication
 Route::middleware('auth')->group(function () {
