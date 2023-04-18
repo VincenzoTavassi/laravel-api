@@ -48,6 +48,21 @@
                     @enderror
                 </div>
                 <div class="col-9">
+                    <label for="type_id" class="my-2">Tipologia progetto</label>
+                    <select class="form-select @error('type_id') is-invalid @enderror" name="type_id" id="type_id">
+                    <option value="" selected>Nessuna tipologia</option>
+                    @foreach ($types as $type)
+                    {{-- Se il valore dell'input della select è uguale al precedente input utente oppure all'id del progetto (in caso di edit), seleziona l'opzione --}}
+                    <option @if(old('type_id', $project->type_id) == $type->id) selected @endif value="{{$type->id}}">{{$type->title}}</option>   
+                    @endforeach
+                    </select>
+                    @error('type_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="col-9">
                     <label for="description" class="my-2">Descrizione</label>
                     <textarea rows="8" class="w-100 form-control @error('description') is-invalid @enderror" name="description" id="description">{{old('description', $project->description)}}</textarea>
                     @error('description')
