@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Arr;
+
 
 class ProjectController extends Controller
 {
@@ -29,9 +31,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        // istanzio una variabile vuota da inviare al form per evitare l'errore
-        $project = new Project;
-        return view('admin.projects.form', compact('project'));
+        $project = new Project; // istanzio una variabile vuota da inviare al form per evitare l'errore
+        $types = Type::orderBy('title')->get(); // Recupero tutti i tipi disponibili in ordine alfabetico per inviarli alla select
+        return view('admin.projects.form', compact('project', 'types'));
     }
 
     /**
@@ -42,7 +44,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = $this->validation($request->all());
         if (Arr::exists($data, 'image')) { // Se c'è un'immagine nell'array $data
             $path = Storage::put('uploads', $data['image']); // Ottieni il path e salvala nella cartella uploads
@@ -73,7 +74,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.form', compact('project'));
+        $types = Type::orderBy('title')->get(); // Recupero tutti i tipi disponibili per inviarli alla select
+        return view('admin.projects.form', compact('project', 'types'));
     }
 
     /**
@@ -130,7 +132,8 @@ class ProjectController extends Controller
                 'link' => 'required|url|max:255',
                 'description' => 'nullable|max:2500',
                 'date' => 'date|required',
-                'image' => 'nullable|image|mimes:jpg,jpeg,bmp,png'
+                'image' => 'nullable|image|mimes:jpg,jpeg,bmp,png',
+                'type_id' => 'nullable|exists:types,id'
             ],
             [
                 'title.*' => 'Il titolo è obbligatorio (massimo 100 caratteri)',
@@ -145,7 +148,9 @@ class ProjectController extends Controller
                 'date.required' => 'La data del progetto è obbligatoria',
 
                 'image.image' => 'Il file deve essere un\'immagine',
-                'image.mimes' => 'Estensioni ammesse: .jpg, .jpeg, .bmp, .png'
+                'image.mimes' => 'Estensioni ammesse: .jpg, .jpeg, .bmp, .png',
+
+                'type_id.exists' => 'Il tipo di progetto selezionato non esiste'
             ]
         )->validate();
     }
