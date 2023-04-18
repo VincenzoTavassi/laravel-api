@@ -57,7 +57,6 @@ Sei sicuro di voler cancellare
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
         <form id="delete" action="{{route('types.destroy', $type)}}" method="POST">
           @csrf @method('DELETE')
-          {{-- <input type="hidden" name="page" value="{{$types->currentPage()}}"> --}}
           <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-type-id="{{$type->id}}" data-bs-type-title="{{$type->title}}">
           Conferma</button>
 </form>
