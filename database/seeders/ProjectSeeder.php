@@ -31,7 +31,7 @@ class ProjectSeeder extends Seeder
 
             $project = new Project;
             $project->title = $faker->catchPhrase();
-            $project->link = $faker->imageUrl(360, 360, 'animals', true);
+            $project->link =  'https://picsum.photos/800/1000?random=' . $i;;
             $project->description = $faker->paragraphs(2, true);
             $project->date = $faker->date();
             $project->type_id = $type_id_random; // Random Type
