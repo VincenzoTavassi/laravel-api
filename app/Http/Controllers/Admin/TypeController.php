@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class TypeController extends Controller
 {
@@ -38,7 +39,11 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validation($request->all());
+        $type = new Type;
+        $type->fill($data);
+        $type->save();
+        return to_route('types.index')->with('message', 'Tipologia creata');
     }
 
     /**
@@ -72,7 +77,9 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+        $data = $this->validation($request->all());
+        $type->update($data);
+        return to_route('types.index')->with('message', 'Tipologia aggiornata');
     }
 
     /**
@@ -85,5 +92,23 @@ class TypeController extends Controller
     {
         $type->delete();
         return to_route('types.index')->with('message', 'Tipologia rimossa con successo');
+    }
+
+
+    private function validation($data)
+    {
+
+        return Validator::make(
+
+            $data,
+            [
+                'color' => 'required|string|size:7',
+                'title' => 'required|string|max:20',
+            ],
+            [
+                'color.*' => 'Il colore è obbligatorio, tipo hexColor (massimo 7 caratteri)',
+                'title.*' => 'Il titolo è obbligatorio, massimo 20 caratteri'
+            ]
+        )->validate();
     }
 }
