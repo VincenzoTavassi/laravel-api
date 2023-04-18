@@ -3,6 +3,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Titolo</th>
+      <th scope="col">Tipologia</th>
       <th scope="col">Data</th>
       <th scope="col">Azioni</th>
     </tr>
@@ -12,6 +13,8 @@
     <tr>
       <th scope="row">{{$project->id}}</th>
       <td>{{$project->title}}</td>
+      <td><span class="badge rounded-pill" style="background-color:{{$project->type?->color}}">{{$project->type?->title}}</span>
+      </td>
       <td>{{$project->date}}</td>
       <td>
         <a href="{{$project->link}}" title="Vai al progetto online"><i class="bi bi-link-45deg"></i></a>
