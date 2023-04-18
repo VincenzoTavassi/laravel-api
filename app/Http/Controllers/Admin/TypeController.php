@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Type;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class TypeController extends Controller
 {
@@ -14,7 +15,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+        return view('admin.types.index', compact('types'));
     }
 
     /**
@@ -24,7 +26,8 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        $type = new Type;
+        return view('admin.types.form', compact('type'));
     }
 
     /**
@@ -57,7 +60,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+        return view('admin.types.form', compact('type'));
     }
 
     /**
@@ -80,6 +83,7 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+        $type->delete();
+        return to_route('types.index')->with('message', 'Tipologia rimossa con successo');
     }
 }
