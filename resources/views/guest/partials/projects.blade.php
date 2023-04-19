@@ -7,6 +7,12 @@
                 <h5 class="card-title">{{$project->title}}</h5>
                 <p><strong>Tipo: </strong><span class="badge rounded-pill" style="background-color:{{$project->type?->color}}">{{$project->type?->title}}</span></p>
                 <p class="card-text">{{$project->description}}</p>
+                <p><strong>Tecnologie: </strong>
+                        @forelse ($project->technologies as $technology) 
+                        <span class="badge" style="background-color:{{$technology->color}}">{{$technology->title}}</span>
+                        @empty ''
+                        @endforelse
+                    </p>
                 <a href="{{route('guest.show', $project)}}" class="btn btn-dark mt-auto">Dettagli</a>
             </div>
         </div>
