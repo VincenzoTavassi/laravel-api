@@ -15,6 +15,7 @@
                         </li>
                         @Auth
                         <li class="nav-item"><a class="nav-link" href="{{route('types.index')}}">Tipologie</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('technologies.index')}}">Tecnologie</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('projects.index')}}">Lista Progetti</a></li>
                         @endauth
 
