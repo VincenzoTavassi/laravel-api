@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 
 class ProjectSeeder extends Seeder
@@ -25,9 +26,12 @@ class ProjectSeeder extends Seeder
             $type_ids[] = $type->id; // Aggiungo l'id all'array
         }
 
+        $technologies = Technology::select('id')->get()->toArray();
+
         for ($i = 0; $i < 50; $i++) {
 
             $type_id_random = rand(1, count($type_ids)); // Selezione di un type id random tra quelli disponibili
+            $technology_id_random = rand(1, count($technologies));
 
             $project = new Project;
             $project->title = $faker->catchPhrase();
@@ -36,6 +40,7 @@ class ProjectSeeder extends Seeder
             $project->date = $faker->date();
             $project->type_id = $type_id_random; // Random Type
             $project->save();
+            $project->technologies()->attach($technology_id_random);
         }
     }
 }
