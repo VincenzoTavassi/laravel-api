@@ -18,10 +18,18 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::Paginate(10);
-        return view('admin.projects.index', compact('projects'));
+        $sort = (!empty($sort_request = $request->get('sort'))) ? $sort_request : 'updated_at';
+
+        $order = (!empty($order_request = $request->get('order'))) ? $order_request : 'desc';
+
+        $projects = Project::orderBy($sort, $order)->paginate(10)->withQueryString();
+
+        return view('admin.projects.index', compact('projects', 'order', 'sort'));
+
+        // $projects = Project::Paginate(10);
+        // return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -117,7 +125,8 @@ class ProjectController extends Controller
         $paginator = Project::paginate(10);
         // Se la pagina del $request è minore uguale all'ultima disponibile OK, altrimenti redirect all'ultima disponibile
         $redirectToPage = ($request->page <= $paginator->lastPage()) ? $request->page : $paginator->lastPage();
-        return to_route('projects.index', ['page' => $redirectToPage])->with('message', 'Progetto eliminato con successo!');
+        return redirect()->route('projects.index', ['page' => $redirectToPage])
+            ->with('message', 'Progetto eliminato con successo!');
     }
 
 
