@@ -46,7 +46,7 @@
     <tr>
       <th scope="row">{{$project->id}}</th>
       <td>{{$project->title}}</td>
-      <td><span class="badge rounded-pill" style="background-color:{{$project->type?->color}}">{{$project->type?->title}}</span>
+      <td>{!!$project->type?->getBadgeHTML()!!}
       </td>
       <td>@forelse ($project->technologies as $technology) {!! $technology->getBadgeHTML()!!} @empty @endforelse</td>
       <td>{{$project->date}}</td>

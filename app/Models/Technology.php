@@ -16,6 +16,6 @@ class Technology extends Model
 
     public function getBadgeHTML()
     {
-        return '<span class="badge rounded-pill" style="background-color:' . $this->color . '">' . $this->title . '</span>';
+        return '<span class="badge" style="background-color:' . $this->color . '">' . $this->title . '</span>';
     }
 }

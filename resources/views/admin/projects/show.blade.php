@@ -18,10 +18,12 @@
                     <h2>{{$project->title}}</h2>
                     <img src="{{$project->image ? asset('storage/' . $project->image) : $project->link}}" alt="{{$project->title}}" width="30%" class="float-end ms-3">
                     <p><strong>id: </strong>{{$project->id}}</p>
-                    <p><strong>Tipologia: </strong><span class="badge rounded-pill" style="background-color:{{$project->type?->color}}">{{$project->type?->title}}</span></p>
+                    <p><strong>Tipologia: </strong>
+                        {!!$project->type?->getBadgeHTML()!!}
+                    </p>
                     <p><strong>Tecnologie: </strong>
                         @forelse ($project->technologies as $technology) 
-                        <span class="badge" style="background-color:{{$technology->color}}">{{$technology->title}}</span>
+                        {!!$technology->getBadgeHTML()!!}
                         @empty ''
                         @endforelse
                     </p>

@@ -5,12 +5,12 @@
             <img src="{{$project->image ? asset('storage/' . $project->image) : $project->link}}" class="card-img-top" alt="{{$project->title}}">
             <div class="card-body d-flex flex-column align-items-center">
                 <h5 class="card-title">{{$project->title}}</h5>
-                <p><strong>Tipo: </strong><span class="badge rounded-pill" style="background-color:{{$project->type?->color}}">{{$project->type?->title}}</span></p>
+                <p><strong>Tipo: </strong>{!!$project->type?->getBadgeHTML()!!}</p>
                 <p class="card-text">{{$project->description}}</p>
                 <p><strong>Tecnologie: </strong>
                         @forelse ($project->technologies as $technology) 
-                        <span class="badge" style="background-color:{{$technology->color}}">{{$technology->title}}</span>
-                        @empty ''
+                        {!! $technology->getBadgeHTML() !!}
+                        @empty Altro
                         @endforelse
                     </p>
                 <a href="{{route('guest.show', $project)}}" class="btn btn-dark mt-auto">Dettagli</a>
