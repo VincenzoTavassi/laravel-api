@@ -1,10 +1,42 @@
 <table class="table table-striped">
     <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Titolo</th>
-      <th scope="col">Tipologia</th>
-      <th scope="col">Data</th>
+      <th scope="col">
+        <a href="{{Request::url()}}?sort=id&order={{$sort == 'id' && $order != 'desc' ? 'desc' : 'asc'}}">#</a>
+      @if ($sort == 'id')
+              <a href="{{ Request::url() }}?sort=id&order={{ $sort == 'id' && $order != 'desc' ? 'desc' : 'asc' }}">
+                <i class="bi bi-arrow-down text-primary fs-5 d-inline-block @if ($order == 'desc')rotate-180 @endif">
+                </i>
+              </a>
+            @endif
+      </th>
+      <th scope="col">
+             <a href="{{Request::url()}}?sort=title&order={{$sort == 'title' && $order != 'desc' ? 'desc' : 'asc'}}">Titolo</a>
+      @if ($sort == 'title')
+              <a href="{{ Request::url() }}?sort=title&order={{ $sort == 'title' && $order != 'desc' ? 'desc' : 'asc' }}">
+                <i class="bi bi-arrow-down text-primary fs-5 d-inline-block @if ($order == 'desc')rotate-180 @endif">
+                </i>
+              </a>
+            @endif
+        </th>
+      <th scope="col">
+                   <a href="{{Request::url()}}?sort=type_id&order={{$sort == 'type_id' && $order != 'desc' ? 'desc' : 'asc'}}">Tipologia</a>
+      @if ($sort == 'type_id')
+              <a href="{{ Request::url() }}?sort=type_id&order={{ $sort == 'type_id' && $order != 'desc' ? 'desc' : 'asc' }}">
+                <i class="bi bi-arrow-down text-primary fs-5 d-inline-block @if ($order == 'desc')rotate-180 @endif">
+                </i>
+              </a>
+            @endif
+        </th>
+      <th scope="col">
+              <a href="{{Request::url()}}?sort=date&order={{$sort == 'date' && $order != 'desc' ? 'desc' : 'asc'}}">Data</a>
+      @if ($sort == 'date')
+              <a href="{{ Request::url() }}?sort=date&order={{ $sort == 'date' && $order != 'desc' ? 'desc' : 'asc' }}">
+                <i class="bi bi-arrow-down text-primary fs-5 d-inline-block @if ($order == 'desc')rotate-180 @endif">
+                </i>
+              </a>
+            @endif
+      </th>
       <th scope="col">Azioni</th>
     </tr>
   </thead>

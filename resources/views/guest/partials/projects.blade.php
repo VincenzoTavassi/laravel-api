@@ -12,5 +12,5 @@
         </div>
     </div>
     @endforeach
-    {{$projects->links()}}
 </div>
+{{$projects->links()}}
