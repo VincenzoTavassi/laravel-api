@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\TechnologyController;
 use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\GuestProjectsController;
 use App\Http\Controllers\ProfileController;
@@ -23,6 +24,7 @@ Route::get('/project/{project}', [GuestProjectsController::class, 'show'])->name
 
 // Resources
 Route::resource('types', TypeController::class)->except('show')->middleware('auth');
+Route::resource('technologies', TechnologyController::class)->except('show')->middleware('auth');
 Route::resource('projects', ProjectController::class)->middleware('auth');
 
 // Dashboard
