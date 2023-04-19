@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Technology;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Arr;
@@ -41,7 +42,8 @@ class ProjectController extends Controller
     {
         $project = new Project; // istanzio una variabile vuota da inviare al form per evitare l'errore
         $types = Type::orderBy('title')->get(); // Recupero tutti i tipi disponibili in ordine alfabetico per inviarli alla select
-        return view('admin.projects.form', compact('project', 'types'));
+        $technologies = Technology::orderBy('title')->get(); // Recupero tecnologie da inviare alla select
+        return view('admin.projects.form', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -60,6 +62,7 @@ class ProjectController extends Controller
         $project = new Project;
         $project->fill($data); // Fillable da inserire nel model
         $project->save();
+        $project->technologies()->attach($data['technologies']);
         return to_route('projects.show', $project)->with('message', 'Progetto creato con successo!');
     }
 
@@ -83,7 +86,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::orderBy('title')->get(); // Recupero tutti i tipi disponibili per inviarli alla select
-        return view('admin.projects.form', compact('project', 'types'));
+        $technologies = Technology::orderBy('title')->get(); // Recupero tecnologie da inviare alla checkbox
+        return view('admin.projects.form', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -105,6 +109,7 @@ class ProjectController extends Controller
 
         }
         $project->update($data);
+        $project->technologies()->sync($data['technologies']);
         return to_route('projects.show', compact('project'))->with('message', 'Progetto modificato con successo!');
     }
 
@@ -142,7 +147,8 @@ class ProjectController extends Controller
                 'description' => 'nullable|max:2500',
                 'date' => 'date|required',
                 'image' => 'nullable|image|mimes:jpg,jpeg,bmp,png',
-                'type_id' => 'nullable|exists:types,id'
+                'type_id' => 'nullable|exists:types,id',
+                'technologies' => 'nullable|exists:technologies,id'
             ],
             [
                 'title.*' => 'Il titolo è obbligatorio (massimo 100 caratteri)',
@@ -159,7 +165,9 @@ class ProjectController extends Controller
                 'image.image' => 'Il file deve essere un\'immagine',
                 'image.mimes' => 'Estensioni ammesse: .jpg, .jpeg, .bmp, .png',
 
-                'type_id.exists' => 'Il tipo di progetto selezionato non esiste'
+                'type_id.exists' => 'Il tipo di progetto selezionato non esiste',
+                'technologies.exists' => 'Il tipo di tecnologia selezionata non esiste'
+
             ]
         )->validate();
     }
