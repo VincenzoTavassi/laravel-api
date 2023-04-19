@@ -63,6 +63,32 @@
                     @enderror
                 </div>
                 <div class="col-9">
+                    <div class="my-2">Tecnologie:</div>
+                    <div class="form-check">
+                        @foreach ($technologies as $technology)
+                    <input 
+                    class="form-check-input @error('technologies') is-invalid @enderror"
+                    type="checkbox"
+                    value="{{$technology->id}}"
+                    id="tech-{{$technology->id}}"
+                    name="technologies[]"
+                    {{-- Se l'id della tecnologia è l'ultimo compilato dall'utente, oppure se è presente l'array
+                    delle tecnologie progetto, dai checked. Se non c'è l'array delle tecnologie progetto, indicalo come vuoto --}}
+                    @if(in_array($technology->id, old('technologies', $project_technologies ?? []))) checked @endif
+                    >
+                    <label class="form-check-label" for="tech-{{$technology->id}}">
+                    {{$technology->title}}
+                    </label>
+                    @endforeach
+                    @error('technologies')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                </div>
+
+                <div class="col-9">
                     <label for="description" class="my-2">Descrizione</label>
                     <textarea rows="8" class="w-100 form-control @error('description') is-invalid @enderror" name="description" id="description">{{old('description', $project->description)}}</textarea>
                     @error('description')

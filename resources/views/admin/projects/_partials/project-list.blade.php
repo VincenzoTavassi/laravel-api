@@ -28,6 +28,7 @@
               </a>
             @endif
         </th>
+        <th scope="col">Tecnologie</th>
       <th scope="col">
               <a href="{{Request::url()}}?sort=date&order={{$sort == 'date' && $order != 'desc' ? 'desc' : 'asc'}}">Data</a>
       @if ($sort == 'date')
@@ -47,6 +48,7 @@
       <td>{{$project->title}}</td>
       <td><span class="badge rounded-pill" style="background-color:{{$project->type?->color}}">{{$project->type?->title}}</span>
       </td>
+      <td>@forelse ($project->technologies as $technology) {!! $technology->getBadgeHTML()!!} @empty @endforelse</td>
       <td>{{$project->date}}</td>
       <td>
         <a href="{{$project->link}}" title="Vai al progetto online"><i class="bi bi-link-45deg"></i></a>

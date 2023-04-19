@@ -87,7 +87,8 @@ class ProjectController extends Controller
     {
         $types = Type::orderBy('title')->get(); // Recupero tutti i tipi disponibili per inviarli alla select
         $technologies = Technology::orderBy('title')->get(); // Recupero tecnologie da inviare alla checkbox
-        return view('admin.projects.form', compact('project', 'types', 'technologies'));
+        $project_technologies = $project->technologies->pluck('id')->toArray();
+        return view('admin.projects.form', compact('project', 'types', 'technologies', 'project_technologies'));
     }
 
     /**
@@ -109,7 +110,9 @@ class ProjectController extends Controller
 
         }
         $project->update($data);
-        $project->technologies()->sync($data['technologies']);
+        // Se il form invia il contenuto delle checkbox (la chiave 'technologies' esiste), aggiorna la relazione
+        if (array_key_exists('technologies', $data)) $project->technologies()->sync($data['technologies']);
+        else $project->technologies()->detach(); // Altrimenti elimina tutte le associazioni
         return to_route('projects.show', compact('project'))->with('message', 'Progetto modificato con successo!');
     }
 
