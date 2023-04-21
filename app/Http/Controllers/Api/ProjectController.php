@@ -18,6 +18,10 @@ class ProjectController extends Controller
     {
         $projects = Project::with('type', 'technologies')->paginate(10);
 
+        foreach ($projects as $project) {
+            if ($project->image) $project->image = url('storage/' . $project->image);
+        }
+
         return response()->json([
             "projects" => $projects,
             "success" => true
