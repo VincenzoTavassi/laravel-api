@@ -16,10 +16,15 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('type', 'technologies')->paginate(10);
+        $projects = Project::with('type', 'technologies')->paginate(9);
 
         foreach ($projects as $project) {
+            // Se c'è un'immagine caricata, trasforma il path in url assoluto
             if ($project->image) $project->image = url('storage/' . $project->image);
+            // Aggiungi alle API i badge html già pronti
+            $project->type->badge = $project->type->getBadgeHTML();
+            foreach ($project->technologies as $technology)
+                $technology->badge = $technology->getBadgeHTML();
         }
 
         return response()->json([
