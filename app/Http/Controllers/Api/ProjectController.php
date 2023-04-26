@@ -53,6 +53,8 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::where('id', $id)->with('type', 'technologies')->first();
+        // Se c'è un'immagine caricata, trasforma il path in url assoluto
+        if ($project->image) $project->image = url('storage/' . $project->image);
         // Aggiungi alle API i badge html già pronti
         $project->type->badge = $project->type->getBadgeHTML();
         foreach ($project->technologies as $technology)
