@@ -52,7 +52,11 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $project = Project::where('id', $id)->with('type', 'technologies')->get();
+        $project = Project::where('id', $id)->with('type', 'technologies')->first();
+        // Aggiungi alle API i badge html già pronti
+        $project->type->badge = $project->type->getBadgeHTML();
+        foreach ($project->technologies as $technology)
+            $technology->badge = $technology->getBadgeHTML();
         return response()->json($project);
     }
 
