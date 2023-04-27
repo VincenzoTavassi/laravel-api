@@ -35,7 +35,7 @@ class PublishProjectMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Publish Project Mail',
+            subject: 'Progetto pubblicato - ' . $this->project->title,
         );
     }
 
@@ -47,7 +47,7 @@ class PublishProjectMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.project-published',
+            markdown: 'emails.project-published',
         );
     }
 
