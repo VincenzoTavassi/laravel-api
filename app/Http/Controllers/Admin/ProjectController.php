@@ -6,11 +6,13 @@ use App\Models\Project;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\PublishProjectMail;
 use App\Models\Technology;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Arr;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectController extends Controller
 {
@@ -63,6 +65,12 @@ class ProjectController extends Controller
         $project->fill($data); // Fillable da inserire nel model
         $project->save();
         $project->technologies()->attach($data['technologies']);
+
+        // Invia e-mail all'utente 
+        $mail = new PublishProjectMail($project);
+        $user_email = Auth::user('email');
+        Mail::to($user_email)->send($mail);
+
         return to_route('projects.show', $project)->with('message', 'Progetto creato con successo!');
     }
 
